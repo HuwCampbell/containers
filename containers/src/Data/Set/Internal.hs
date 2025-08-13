@@ -836,10 +836,8 @@ union t1 Tip = t1
 union t1 (Bin 1 x _ _) = insertR x t1
 union (Bin 1 x _ _) t2 = insert x t2
 union Tip t2  = t2
-union t1@(Bin _ x l1 r1) t2 = case splitS x t2 of
-  (l2 :*: r2)
-    | l1l2 `ptrEq` l1 && r1r2 `ptrEq` r1 -> t1
-    | otherwise -> link x l1l2 r1r2
+union (Bin _ x l1 r1) t2 = case splitS x t2 of
+  (l2 :*: r2) -> link x l1l2 r1r2
     where !l1l2 = union l1 l2
           !r1r2 = union r1 r2
 #if __GLASGOW_HASKELL__
